@@ -31,7 +31,7 @@ export default function Footer() {
         </div>
 
         <div className="pt-8">
-          <p>© 2026 AAA Inc. All Right Reserved</p>
+          <p>© 2026 RJ. All Right Reserved</p>
         </div>
       </div>
     </footer>
