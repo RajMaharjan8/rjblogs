@@ -10,7 +10,7 @@ export default function Navbar() {
     { href: "/connect", label: "Connect" },
   ];
   const isActive = (href: string) => {
-    return href === "/" ? pathname === "/" : pathname.startsWith(href);
+    return href === "/" ? pathname === "/" : pathname.endsWith(href);
   };
   return (
     <nav className="flex justify-between  md:px-12 px-4 cursor-pointer shadow-md/5">

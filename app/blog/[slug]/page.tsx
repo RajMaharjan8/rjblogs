@@ -1,4 +1,3 @@
-import FaqCard from "@/app/components/molecules/FaqCard";
 import FaqList from "@/app/components/organisms/FaqList";
 import Link from "next/link";
 
@@ -26,7 +25,8 @@ export default function Page({ params }: PageProps<"/blog/[slug]">) {
         <p className="font-semilight">
           <Link href="/">Home</Link>
           <span> / </span>
-          Travel
+          <Link href="/blog">Blog</Link>
+
           <span> / </span>
           <span className="text-primary-text font-light">
             Latarambeshwor Mahadev Hike from Kathmandu [Updated 2026]
