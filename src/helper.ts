@@ -88,8 +88,9 @@ export async function fetchSingleBlog(slug: string) {
     const data = (await performRequest({
       query: blogDetail(slug),
     })) as { blog: BlogDetail };
-    return data?.blog ?? [];
+    return data?.blog ?? null;
   } catch (err) {
     console.log(err);
+    return null;
   }
 }
