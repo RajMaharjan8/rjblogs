@@ -1,19 +1,15 @@
 import Link from "next/link";
 import Button from "../atoms/Button";
 import Tag from "../atoms/Tag";
-
-interface TagProps {
-  id: number;
-  title: string;
-  slug: string;
-}
+import { convertDateFormat } from "@/src/helper";
+import { Author, TagInterface } from "@/src/interfaces";
 
 interface BlogCardProps {
-  tags: TagProps[] | null | [];
+  tags: TagInterface[] | null | [];
   title: string;
   excerpt: string;
   imgUrl: string | null;
-  author: string;
+  author: Author;
   date: string;
   slug: string;
 }
@@ -56,9 +52,12 @@ export default function BlogCard({
           <h3 className="text-3xl font-extrabold hover:text-primary transition-colors ease-in-out">
             {title}
           </h3>
-          <p>
-            by <span className="text-primary">{author}</span> | {date}
-          </p>
+          {author?.name && (
+            <p>
+              by <span className="text-primary">{author?.name}</span> | {" "}
+              {convertDateFormat(date)}
+            </p>
+          )}
           <p className="line-clamp-2">{excerpt}</p>
           <Button title="+ Read More" />
         </div>

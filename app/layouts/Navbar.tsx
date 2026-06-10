@@ -7,7 +7,6 @@ export default function Navbar() {
   const links = [
     { href: "/", label: "Home" },
     { href: "/blog", label: "Blog" },
-    { href: "/connect", label: "Connect" },
   ];
   const isActive = (href: string) => {
     return href === "/" ? pathname === "/" : pathname.endsWith(href);

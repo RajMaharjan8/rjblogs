@@ -1,12 +1,9 @@
+import { FaqInterface } from "@/src/interfaces";
 import FaqCard from "../molecules/FaqCard";
 
-interface FaqProps {
-  id: number;
-  question: string;
-  answer: string;
-}
+
 interface FaqListProps {
-  faqList: FaqProps[];
+  faqList: FaqInterface[];
 }
 
 export default function FaqList({ faqList }: FaqListProps) {
