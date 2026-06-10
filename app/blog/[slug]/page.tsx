@@ -1,10 +1,14 @@
 import FaqList from "@/app/components/organisms/FaqList";
 import { convertDateFormat, dastToText, fetchSingleBlog } from "@/src/helper";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
 export default async function Page({ params }: PageProps<"/blog/[slug]">) {
   const { slug } = await params;
   const data = await fetchSingleBlog(slug);
+  if (!data) {
+    notFound();
+  }
   const faqs = data?.faqs ?? [];
   return (
     <div>
