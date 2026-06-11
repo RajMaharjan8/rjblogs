@@ -103,7 +103,13 @@ export default async function Page({ params }: PageProps<"/blog/[slug]">) {
 
         {faqs.length > 0 && (
           <>
-            <h2>Faqs</h2>
+            <h2 className="text-3xl font-light text-extrabold">
+            <strong>
+
+              Faqs
+            </strong>
+              
+            </h2>
             <FaqList faqList={faqs} />
           </>
         )}
