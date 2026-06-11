@@ -2,6 +2,7 @@ import FaqList from "@/app/components/organisms/FaqList";
 import { convertDateFormat, dastToText, fetchSingleBlog } from "@/src/helper";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { StructuredText } from "react-datocms";
 
 export default async function Page({ params }: PageProps<"/blog/[slug]">) {
   const { slug } = await params;
@@ -66,7 +67,7 @@ export default async function Page({ params }: PageProps<"/blog/[slug]">) {
 
         <div className="mt-8 text-justify">
           <p className="font-extralight">
-            {dastToText(data?.description ?? null)}
+            <StructuredText data={data.description} />
           </p>
         </div>
 
