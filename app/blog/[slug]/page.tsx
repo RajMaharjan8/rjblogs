@@ -65,10 +65,8 @@ export default async function Page({ params }: PageProps<"/blog/[slug]">) {
           )}
         </div>
 
-        <div className="mt-8 text-justify">
-          <p className="font-extralight">
-            <StructuredText data={data.description} />
-          </p>
+        <div className="mt-8 text-justify font-extralight blog-content">
+          <StructuredText data={data.description} />
         </div>
 
         {faqs.length > 0 && <FaqList faqList={faqs} />}

@@ -1,14 +1,27 @@
 @import "tailwindcss";
 
-:root{
+:root {
   --bg-color: #f7f7f7;
 }
 
-@theme{
-  --color-primary: #0D47A1;
+@theme {
+  --color-primary: #0d47a1;
   --color-primary-text: #274653;
 }
 
-.body{
+body {
   background-color: var(--bg-color);
+}
+.blog-content hr {
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+.blog-content h1,
+.blog-content h2,
+.blog-content h3,
+.blog-content h4,
+.blog-content h5,
+.blog-content h6 {
+  margin-top: 12px;
+  font-size: larger;
 }
