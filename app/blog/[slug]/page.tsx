@@ -103,7 +103,7 @@ export default async function Page({ params }: PageProps<"/blog/[slug]">) {
 
         {faqs.length > 0 && (
           <>
-            <h2 className="text-3xl font-light text-extrabold">
+            <h2 className="text-3xl font-light text-extrabold mt-12">
             <strong>
 
               Faqs
