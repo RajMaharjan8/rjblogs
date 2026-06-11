@@ -65,7 +65,7 @@ export default async function Page({ params }: PageProps<"/blog/[slug]">) {
           )}
         </div>
 
-        <div className="mt-8 text-justify font-extralight blog-content">
+        <div className="mt-8 text-justify font-light blog-content">
           <StructuredText data={data.description} />
         </div>
 

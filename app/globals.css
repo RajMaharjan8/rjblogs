@@ -10,7 +10,7 @@
 }
 
 body {
-  background-color: var(--bg-color);
+  /* background-color: var(--bg-color); */
 }
 .blog-content hr {
   margin-top: 12px;
@@ -23,5 +23,6 @@ body {
 .blog-content h5,
 .blog-content h6 {
   margin-top: 12px;
-  font-size: larger;
+  font-size: x-large;
+  font-weight: 300;
 }
