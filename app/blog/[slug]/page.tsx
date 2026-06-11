@@ -1,5 +1,10 @@
 import FaqList from "@/app/components/organisms/FaqList";
-import { convertDateFormat, dastToText, fetchSingleBlog } from "@/src/helper";
+import {
+  convertDateFormat,
+  dastToText,
+  fetchSingleBlog,
+  getReadStats,
+} from "@/src/helper";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { StructuredText } from "react-datocms";
@@ -11,6 +16,8 @@ export default async function Page({ params }: PageProps<"/blog/[slug]">) {
     notFound();
   }
   const faqs = data?.faqs ?? [];
+  const { wordCount, readTime } = getReadStats(data?.description);
+
   return (
     <div>
       <div className="flex gap-2 flex-col md:items-center items-start mt-24 container mx-auto md:px-24 px-4">
@@ -40,36 +47,66 @@ export default async function Page({ params }: PageProps<"/blog/[slug]">) {
       </div>
 
       <div className="container mx-auto md:px-24 px-4 mt-14">
-        <div className="flex gap-4">
-          <div className="w-18 h-18 overflow-hidden rounded-full shrink-0">
-            {data?.author?.profile?.url ? (
-              <img
-                src={data.author.profile.url}
-                className="w-full h-full object-cover"
-                alt={data.author.profile.title ?? data.title}
-              />
-            ) : (
-              <div className="bg-primary text-white font-bold text-3xl w-full h-full flex items-center justify-center">
-                {data?.author?.name?.charAt(0) ?? "A"}
+        <div className="grid grid-cols-12">
+          <div className="md:col-span-4 col-span-12">
+            <div className="flex gap-4">
+              <div className="w-18 h-18 overflow-hidden rounded-full shrink-0">
+                {data?.author?.profile?.url ? (
+                  <img
+                    src={data.author.profile.url}
+                    className="w-full h-full object-cover"
+                    alt={data.author.profile.title ?? data.title}
+                  />
+                ) : (
+                  <div className="bg-primary text-white font-bold text-3xl w-full h-full flex items-center justify-center">
+                    {data?.author?.name?.charAt(0) ?? "A"}
+                  </div>
+                )}
               </div>
-            )}
+
+              {data?.author && (
+                <div className="flex flex-col h-full my-auto ">
+                  <p className="text-primary-text text-md">Written By</p>
+                  <span className="text-primary text-lg font-extrabold">
+                    {data?.author?.name}
+                  </span>
+                </div>
+              )}
+            </div>
           </div>
 
-          {data?.author && (
-            <div className="flex flex-col h-full my-auto ">
-              <p className="text-primary-text text-md">Written By</p>
-              <span className="text-primary text-lg font-extrabold">
-                {data?.author?.name}
-              </span>
+          <div className="md:col-span-4 col-span-12 md:mx-auto md:my-auto md:mt-0 mt-8">
+            <div className="text-xl font-bold text-primary-text">Read Time</div>
+            {readTime ?? 0} Minutes
+          </div>
+
+          <div className="md:col-span-4 col-span-12 md:mx-auto md:my-auto md:mt-0 mt-8">
+            <div className="text-xl font-bold text-primary-text">
+              Word Count
             </div>
-          )}
+            {wordCount ?? 0}
+          </div>
         </div>
 
         <div className="mt-8 text-justify font-light blog-content">
           <StructuredText data={data.description} />
         </div>
 
-        {faqs.length > 0 && <FaqList faqList={faqs} />}
+        {data?.quote && (
+          <div className="my-12 bg-[#F5F2E9] p-8 w-full rounded-xl font-light border border-primary shadow-lg">
+            <p className="mb-8">{data?.quote?.quote}</p>
+            {data?.quote?.author && (
+              <span className="text-primary italic">- {data?.quote?.author}</span>
+            )}
+          </div>
+        )}
+
+        {faqs.length > 0 && (
+          <>
+            <h2>Faqs</h2>
+            <FaqList faqList={faqs} />
+          </>
+        )}
       </div>
     </div>
   );

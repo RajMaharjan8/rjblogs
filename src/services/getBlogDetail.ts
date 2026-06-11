@@ -38,6 +38,11 @@ export const blogDetail = (slug: string) => {
             title
             id
             }
+            quote {
+                id
+                quote
+                author
+            }
             _createdAt
         }
     }

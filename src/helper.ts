@@ -1,10 +1,4 @@
-import {
-  Blog,
-  BlogDetail,
-  Category,
-  DatoBlog,
-  QuickLink,
-} from "./interfaces";
+import { Blog, BlogDetail, Category, DatoBlog, QuickLink } from "./interfaces";
 import { performRequest } from "./services/baseQuery";
 import { getAllBlogs } from "./services/getAllBlogs";
 import { getCategories } from "./services/getAllCategories";
@@ -94,3 +88,10 @@ export async function fetchSingleBlog(slug: string) {
     return null;
   }
 }
+
+export const getReadStats = (field: any, wordsPerMinute = 200) => {
+  const text = dastToText(field);
+  const wordCount = text ? text.split(/\s+/).filter(Boolean).length : 0;
+  const readTime = Math.max(1, Math.ceil(wordCount / wordsPerMinute));
+  return { wordCount, readTime };
+};

@@ -40,6 +40,7 @@ export interface BlogDetail {
   category: DatoCategory[];
   gallery: BlogGallery[];
   faqs: FaqInterface[];
+  quote: {id: string; quote:string; author:string}
 }
 
 export interface BlogGallery {
