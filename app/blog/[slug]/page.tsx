@@ -8,6 +8,10 @@ import {
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { StructuredText } from "react-datocms";
+import Facebook from "../../../public/social/brand-facebook.svg";
+import Linkedin from "../../../public/social/brand-linkedin.svg";
+import Twitter from "../../../public/social/brand-x.svg";
+import CopyLinkButton from "@/app/components/molecules/CopyLinkButton";
 
 export default async function Page({ params }: PageProps<"/blog/[slug]">) {
   const { slug } = await params;
@@ -17,7 +21,11 @@ export default async function Page({ params }: PageProps<"/blog/[slug]">) {
   }
   const faqs = data?.faqs ?? [];
   const { wordCount, readTime } = getReadStats(data?.description);
-
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+  const url = `${siteUrl}/blog/${slug}`;
+  const facebookShare = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+  const linkedinShare = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
+  const twitterShare = `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}`;
   return (
     <div>
       <div className="flex gap-2 flex-col md:items-center items-start mt-24 container mx-auto md:px-24 px-4">
@@ -96,7 +104,9 @@ export default async function Page({ params }: PageProps<"/blog/[slug]">) {
           <div className="my-12 bg-[#F5F2E9] p-8 w-full rounded-xl font-light border border-primary shadow-lg">
             <p className="mb-8">{data?.quote?.quote}</p>
             {data?.quote?.author && (
-              <span className="text-primary italic">- {data?.quote?.author}</span>
+              <span className="text-primary italic">
+                - {data?.quote?.author}
+              </span>
             )}
           </div>
         )}
@@ -104,15 +114,29 @@ export default async function Page({ params }: PageProps<"/blog/[slug]">) {
         {faqs.length > 0 && (
           <>
             <h2 className="text-3xl font-light text-extrabold mt-8">
-            <strong>
-
-              Faqs
-            </strong>
-              
+              <strong>Faqs</strong>
             </h2>
             <FaqList faqList={faqs} />
           </>
         )}
+
+        <div className="">
+          <h2 className="text-xl font-light text-extrabold mt-8">
+            <strong>Share this blog</strong>
+          </h2>
+
+          <div className="flex gap-4 py-4 cursor-pointer text-primary">
+            <a href={facebookShare} target="_blank" rel="noopener noreferrer" aria-label="Share on Facebook">
+              <Facebook />
+            </a>
+            <a href={linkedinShare} target="_blank" rel="noopener noreferrer" aria-label="Share on LinkedIn">
+              <Linkedin />
+            </a>
+            <a href={twitterShare} target="_blank" rel="noopener noreferrer" aria-label="Share on X">
+              <Twitter />
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   );
