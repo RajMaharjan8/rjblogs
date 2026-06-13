@@ -43,6 +43,21 @@ export const blogDetail = (slug: string) => {
                 quote
                 author
             }
+            _seoMetaTags {
+                tag
+                content
+                attributes
+            }
+            social {
+                description
+                image {
+                    url
+                    title
+                    tags
+                }
+                title
+                twitterCard
+            }
             _createdAt
         }
     }

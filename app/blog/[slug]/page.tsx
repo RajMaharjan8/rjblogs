@@ -7,11 +7,22 @@ import {
 } from "@/src/helper";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { StructuredText } from "react-datocms";
+import { StructuredText, toNextMetadata } from "react-datocms";
 import Facebook from "../../../public/social/brand-facebook.svg";
 import Linkedin from "../../../public/social/brand-linkedin.svg";
 import Twitter from "../../../public/social/brand-x.svg";
 import CopyLinkButton from "@/app/components/molecules/CopyLinkButton";
+
+export async function generateMetadata({ params }: PageProps<"/blog/[slug]">) {
+  const { slug } = await params;
+  const data = await fetchSingleBlog(slug);
+
+  if (!data?._seoMetaTags) {
+    return { title: data?.title ?? "Blog" };
+  }
+
+  return toNextMetadata(data._seoMetaTags);
+}
 
 export default async function Page({ params }: PageProps<"/blog/[slug]">) {
   const { slug } = await params;
@@ -19,9 +30,10 @@ export default async function Page({ params }: PageProps<"/blog/[slug]">) {
   if (!data) {
     notFound();
   }
+
   const faqs = data?.faqs ?? [];
   const { wordCount, readTime } = getReadStats(data?.description);
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
   const url = `${siteUrl}/blog/${slug}`;
   const facebookShare = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
   const linkedinShare = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;

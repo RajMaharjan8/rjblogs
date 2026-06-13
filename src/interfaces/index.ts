@@ -41,6 +41,7 @@ export interface BlogDetail {
   gallery: BlogGallery[];
   faqs: FaqInterface[];
   quote: {id: string; quote:string; author:string}
+  _seoMetaTags: { tag: string; content: string | null; attributes: Record<string, string> | null }[]
 }
 
 export interface BlogGallery {
