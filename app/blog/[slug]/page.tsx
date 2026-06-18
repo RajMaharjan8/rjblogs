@@ -7,6 +7,7 @@ import {
 } from "@/src/helper";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 import { StructuredText, toNextMetadata } from "react-datocms";
 import Facebook from "../../../public/social/brand-facebook.svg";
 import Linkedin from "../../../public/social/brand-linkedin.svg";
@@ -17,11 +18,42 @@ export async function generateMetadata({ params }: PageProps<"/blog/[slug]">) {
   const { slug } = await params;
   const data = await fetchSingleBlog(slug);
 
-  if (!data?._seoMetaTags) {
-    return { title: data?.title ?? "Blog" };
+  if (!data) {
+    return { title: "Blog" };
   }
 
-  return toNextMetadata(data._seoMetaTags);
+  // Base metadata derived from DatoCMS SEO tags (title, description, icons, og, twitter).
+  const base: Metadata = data._seoMetaTags
+    ? toNextMetadata(data._seoMetaTags)
+    : { title: data.title ?? "Blog" };
+
+  // Layer the explicit `social` fields (SEO meta title/description + OG image) on top.
+  const social = data.social;
+  const socialTitle = social?.title ?? data.title;
+  const socialDescription = social?.description ?? undefined;
+  const socialImage = social?.image?.url;
+  const twitterCard =
+    social?.twitterCard === "summary" ? "summary" : "summary_large_image";
+
+  return {
+    ...base,
+    title: socialTitle ?? base.title,
+    description: socialDescription ?? base.description,
+    openGraph: {
+      ...base.openGraph,
+      title: socialTitle ?? base.openGraph?.title,
+      description: socialDescription ?? base.openGraph?.description,
+      ...(socialImage
+        ? { images: [{ url: socialImage, alt: social?.image?.title ?? socialTitle ?? undefined }] }
+        : {}),
+    },
+    twitter: {
+      card: twitterCard,
+      title: socialTitle ?? base.twitter?.title,
+      description: socialDescription ?? base.twitter?.description,
+      ...(socialImage ? { images: [socialImage] } : {}),
+    },
+  } satisfies Metadata;
 }
 
 export default async function Page({ params }: PageProps<"/blog/[slug]">) {

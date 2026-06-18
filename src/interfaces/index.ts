@@ -16,17 +16,23 @@ export interface Blog {
   _createdAt: string;
 }
 
-export interface Author{
+export interface Author {
   id: string;
   name: string;
-  profile: {url: string, title: string}
-  slug: string
+  profile: { url: string; title: string };
+  slug: string;
 }
 
-export interface FaqInterface{
+export interface FaqInterface {
   id: string;
   question: string;
   answer: string;
+}
+
+interface BlogImageInterface {
+  url: string;
+  title: string;
+  tags: string;
 }
 
 export interface BlogDetail {
@@ -40,8 +46,18 @@ export interface BlogDetail {
   category: DatoCategory[];
   gallery: BlogGallery[];
   faqs: FaqInterface[];
-  quote: {id: string; quote:string; author:string}
-  _seoMetaTags: { tag: string; content: string | null; attributes: Record<string, string> | null }[]
+  quote: { id: string; quote: string; author: string };
+  _seoMetaTags: {
+    tag: string;
+    content: string | null;
+    attributes: Record<string, string> | null;
+  }[];
+  social: {
+    title: string | null;
+    description: string | null;
+    image: BlogImageInterface | null;
+    twitterCard: string | null;
+  } | null;
 }
 
 export interface BlogGallery {
@@ -82,13 +98,13 @@ interface DastNode {
   children?: DastNode[];
 }
 
-export interface Category{
+export interface Category {
   id: string;
   title: string;
   slug: string;
 }
 
-export interface QuickLink{
+export interface QuickLink {
   id: string;
   label: string;
   link: string;
